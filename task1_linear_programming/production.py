@@ -26,6 +26,10 @@ class ProductionModel:
         self.vars = {drink.name: LpVariable(drink.name, lowBound=0, cat="Integer") for drink in drinks}
         self.model += sum(self.vars.values())
 
+        for resource, limit in resources.limits.items():
+            self.model += sum(drink.ingredients.get(resource, 0) * self.vars[drink.name] for drink in
+                              drinks) <= limit  # the sum of all resources for all drinks must not exceed the available quantity
+
     def solve(self):
         solver = PULP_CBC_CMD(msg=False) # tells CBD don't print anything.
         self.model.solve(solver)
