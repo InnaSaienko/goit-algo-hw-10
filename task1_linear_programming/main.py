@@ -1,8 +1,17 @@
-from model import solve_problem
+from model import Drink, Resources, ProductionModel
 
 
 def main() -> None:
-    result = solve_problem()
+    drinks = [
+        Drink("Lemonade", {"Water": 2, "Sugar": 1, "Lemon": 1}),
+        Drink("Juice", {"Water": 1, "Puree": 2}),
+    ]
+
+    resources = Resources(
+        {"Water": 100, "Sugar": 50, "Lemon": 30, "Puree": 40}
+    )
+
+    result = ProductionModel(drinks, resources).solve()
     print(result)
 
 
