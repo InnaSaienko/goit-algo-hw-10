@@ -1,4 +1,4 @@
-from model import Drink, Resources, ProductionModel
+from production import Drink, Resources, ProductionModel
 
 
 def main() -> None:
@@ -11,8 +11,8 @@ def main() -> None:
         {"Water": 100, "Sugar": 50, "Lemon": 30, "Puree": 40}
     )
 
-    result = ProductionModel(drinks, resources).solve()
-    print(result)
+    ProductionModel(drinks, resources).solve()
+
 
 
 if __name__ == "__main__":

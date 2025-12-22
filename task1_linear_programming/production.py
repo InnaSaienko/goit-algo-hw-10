@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from pulp import LpProblem, LpMaximize, LpVariable
+from pulp import LpProblem, LpMaximize, LpVariable, PULP_CBC_CMD
 
 
 @dataclass
@@ -26,7 +26,8 @@ class ProductionModel:
         self.vars = {drink.name: LpVariable(drink.name, lowBound=0, cat="Integer") for drink in drinks}
         self.model += sum(self.vars.values())
 
-
     def solve(self):
-        self.model.solve()
-        return {k: v.value() for k, v in self.vars.items()}
+        solver = PULP_CBC_CMD(msg=False) # tells CBD don't print anything.
+        self.model.solve(solver)
+        result = {k: v.value() for k, v in self.vars.items()}
+        print(f'\n"\033[1mOptimal production:\033[0m"', result)
