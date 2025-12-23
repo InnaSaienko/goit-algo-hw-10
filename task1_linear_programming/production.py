@@ -27,11 +27,12 @@ class ProductionModel:
         self.model += sum(self.vars.values())
 
         for resource, limit in resources.limits.items():
-            self.model += sum(drink.ingredients.get(resource, 0) * self.vars[drink.name] for drink in
-                              drinks) <= limit  # the sum of all resources for all drinks must not exceed the available quantity
+            sum_all_resources = sum(drink.ingredients.get(resource, 0) * self.vars[drink.name] for drink in drinks)
+
+            self.model += sum_all_resources <= limit  # total resource use must not exceed limits
 
     def solve(self):
-        solver = PULP_CBC_CMD(msg=False) # tells CBD don't print anything.
+        solver = PULP_CBC_CMD(msg=False)  # tells CBD don't print anything.
         self.model.solve(solver)
         result = {k: v.value() for k, v in self.vars.items()}
         print(f'\n"\033[1mOptimal production:\033[0m"', result)
