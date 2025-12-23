@@ -19,9 +19,9 @@ def main() -> None:
     result_monte_carlo = monte_carlo_worker(integration_function, a, b, number_of_points)
     result_quad = exact_integral(integration_function, a, b)
 
-    print("Monte Carlo integration: ", result_monte_carlo)
-    print("Exact:", result_quad)
-    print(f"Absolute deviation: {abs(result_monte_carlo - result_quad)}")
+    print(f"Monte Carlo integration: {result_monte_carlo:.6f}")
+    print(f"Exact: {result_quad:.6f}")
+    print(f"Absolute deviation: {abs(result_monte_carlo - result_quad):.6f}")
 
     visualizing_result(integration_function, a, b, number_of_points)
 
