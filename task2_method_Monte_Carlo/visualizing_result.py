@@ -1,23 +1,38 @@
-from typing import Callable
+from typing import Callable, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-def visualizing_result(function: Callable[[float], float], a: float, b: float) -> None:
-    """Plot function and shaded area"""
+def visualizing_result(function: Callable[[Union[float, np.ndarray]], np.ndarray], a: float, b: float, number_points: int) -> None:
+    """Plot function and points"""
 
-    x = np.linspace(a - 0.5, b + 0.5, 400) #  list of points on axis X
-    y = function(x) # list of point on axis Y
+    x_inside, y_inside = [], []  # points under curve
+    x_outside, y_outside = [], []  # points above curve
+    y_max = np.max(function(np.linspace(a, b, 400)))
 
-    fig, ax = plt.subplots() # new canvas for drawing
-    ax.plot(x, y, linewidth=2) #  draw a curve
+    for _ in range(number_points):
+        x = np.random.uniform(a, b)
+        y = np.random.uniform(0, y_max)
+        if y <= function(x):
+            x_inside.append(x)
+            y_inside.append(y)
+        else:
+            x_outside.append(x)
+            y_outside.append(y)
 
-    points_on_segment_a_b = np.linspace(a, b, 200) # 200 -> number of points to under curve area
-    ax.fill_between(points_on_segment_a_b, function(points_on_segment_a_b), alpha=0.3) # alpha value used for blending
+    fig, ax = plt.subplots()
 
-    ax.axvline(a, linestyle='dashed') #draw vertical lines on the integration limits [a, b]
-    ax.axvline(b, linestyle='dashed')
+    # Create plot curve
+    x_line = np.linspace(a, b, 400)
+    y_line = function(x_line)
+    ax.plot(x_line, y_line, color="blue", linewidth=2, label="f(x)")
 
-    ax.grid()
+
+    # Draw points
+    ax.scatter(x_inside, y_inside, color="green", s=10, label="Points below curve")
+    ax.scatter(x_outside, y_outside, color="red", s=10, label="Points above curve")
+
+    ax.legend()
+    print(f"Points below curve: {len(x_inside)}, above curve: {len(x_outside)}")
     plt.show()
