@@ -13,8 +13,9 @@ def main() -> None:
     """Run Monte Carlo integration"""
 
     a, b = 0, 2
+    number_random_points = 100000
 
-    print(f"Monte Carlo integration: ", monte_carlo_worker(integration_function, a, b, ))
+    print(f"Monte Carlo integration: ", monte_carlo_worker(integration_function, a, b, number_random_points))
     visualizing_result(integration_function, a, b)
 
 
