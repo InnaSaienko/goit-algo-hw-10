@@ -5,6 +5,9 @@ description = "Production optimization using PuLP"
 requires-python = ">=3.10"
 dependencies = [
     "pulp",
+    "numpy",
+    "matplotlib",
+    "scipy",
 ]
 [tool.ruff]
 line-length = 88
