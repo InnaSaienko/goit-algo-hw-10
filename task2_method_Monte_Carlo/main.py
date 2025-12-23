@@ -1,4 +1,5 @@
 from monte_carlo_worker import monte_carlo_worker
+from exact_integral_by_quad import exact_integral
 from visualizing_result import visualizing_result
 
 
@@ -15,7 +16,13 @@ def main() -> None:
     a, b = 0, 2
     number_random_points = 100000
 
-    print(f"Monte Carlo integration: ", monte_carlo_worker(integration_function, a, b, number_random_points))
+    result_monte_carlo = monte_carlo_worker(integration_function, a, b, number_random_points)
+    result_quad = exact_integral(integration_function, a, b)
+
+    print("Monte Carlo integration: ", result_monte_carlo)
+    print("Exact:", result_quad)
+    print(f"Absolute deviation: {abs(result_monte_carlo - result_quad)}")
+
     visualizing_result(integration_function, a, b)
 
 
