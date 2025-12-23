@@ -9,7 +9,7 @@ def visualizing_result(function: Callable[[Union[float, np.ndarray]], np.ndarray
 
     x_inside, y_inside = [], []  # points under curve
     x_outside, y_outside = [], []  # points above curve
-    y_max = np.max(function(np.linspace(a, b, 400)))
+    y_max = np.max(function(np.linspace(a, b, 400))) # limiting the vertical range of random points
 
     for _ in range(number_points):
         x = np.random.uniform(a, b)
